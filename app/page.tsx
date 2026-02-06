@@ -1,65 +1,113 @@
-import Image from "next/image";
+"use client";
+
+import { Magnetic } from "@/components/motion-primitives/magnetic";
+import PixelBlast from "@/components/PixelBlast";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { routes } from "@/routes";
+import { ResizeIcon } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
+  // state
+  const [size, setSize] = useState("sm");
+
+  // Routing
+  const router = useRouter();
+
+  // Animation config
+  const springOptions = { bounce: 0.1 };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        position: "relative",
+        backgroundColor: "oklch(0.9399 0.0203 345.6985)",
+      }}
+    >
+      <PixelBlast
+        variant="square"
+        pixelSize={4}
+        color="oklch(0.9399 0.0203 345.6985)"
+        patternScale={2}
+        patternDensity={1}
+        pixelSizeJitter={0}
+        enableRipples
+        rippleSpeed={0.4}
+        rippleThickness={0.12}
+        rippleIntensityScale={1.5}
+        liquid={false}
+        liquidStrength={0.12}
+        liquidRadius={1.2}
+        liquidWobbleSpeed={5}
+        speed={0.5}
+        edgeFade={0.25}
+        transparent
+      />
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <Card
+          className={`w-full transition-all duration-300 ease-out ${size === "md" ? "max-w-sm" : "max-w-md"}`}
+        >
+          <CardHeader>
+            <div className="flex justify-start gap-1">
+              <Button
+                size={"icon-xs"}
+                className="bg-emerald-500 hidden lg:flex md:flex rounded-full h-5 w-5 hover:bg-emerald-600 transition-colors"
+                onClick={() => {
+                  setSize(size === "md" ? "lg" : "md");
+                }}
+              >
+                <ResizeIcon />
+              </Button>
+            </div>
+            <CardTitle className="text-xl">Got a crush? 👀</CardTitle>
+            <CardDescription>
+              Stop overthinking and just send it
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Create a cute valentine message and shoot your shot. Worst case?
+              They say no. Best case? 💕
+            </p>
+          </CardContent>
+          <CardFooter>
+            <Magnetic
+              intensity={0.2}
+              springOptions={springOptions}
+              actionArea="global"
+              range={200}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+              <Button
+                variant={"secondary"}
+                className="w-full rounded shadow"
+                onClick={() => {
+                  router.push(routes.create);
+                }}
+              >
+                <Magnetic
+                  intensity={0.1}
+                  springOptions={springOptions}
+                  actionArea="global"
+                  range={200}
+                >
+                  Let&apos;s go 💘
+                </Magnetic>
+              </Button>
+            </Magnetic>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 }
