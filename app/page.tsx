@@ -54,7 +54,7 @@ export default function Home() {
         edgeFade={0.25}
         transparent
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 z-50">
         <Card
           className={`w-full transition-all duration-300 ease-out ${size === "md" ? "max-w-sm" : "max-w-md"}`}
         >
